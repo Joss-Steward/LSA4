@@ -25,6 +25,7 @@ public class FileSystemClient
 
 			// get the root naming context
 			org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+
 			// Use NamingContextExt instead of NamingContext. This is
 			// part of the Interoperable naming Service.
 			NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
@@ -34,11 +35,10 @@ public class FileSystemClient
 			fileSystemImpl = FileSystemHelper.narrow(ncRef.resolve_str(name));
 
 			System.out.println("Obtained a handle on server object: " + fileSystemImpl);
-			System.out.println(fileSystemImpl.sayHello());
-			System.out.println("finished hello starting to read file");
-			System.out.println(fileSystemImpl.readFile("test2.txt"));
+			System.out.println(fileSystemImpl.listLocalFiles());
+
 			// This is how we would shut down the server
-			//fileSystemImpl.shutdown();
+			fileSystemImpl.shutdown();
 
 		} catch (Exception e)
 		{

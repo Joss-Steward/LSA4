@@ -1,11 +1,25 @@
 module FileSystemApp
 {
-typedef sequence<octet> byteSeq;
+  // Typedefs //
+  typedef sequence<string> fileList;
+  typedef sequence<octet> byteSeq;
+  
   interface FileSystem
   {
-  string sayHello();
-  string sayGoodbye();
-  string readFile(in string title);
-  oneway void shutdown();
+    // Server-Server Functions //
+    boolean hasFile(in string fileName);
+    string getFile(in string fileName);
+    
+    // Client-Server Functions //
+    long openFileReadonly(in string fileName);
+    string readRecord(in long lineNumber, in long filePointer);
+    void closeFile(in long filePointer);
+    
+    // Testing Functions //
+    fileList listOpenFiles();
+    fileList listLocalFiles();
+    
+    // System Functions //
+    oneway void shutdown();
   };
 };

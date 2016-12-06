@@ -2,6 +2,7 @@ package FileSystemApp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.omg.CORBA.ORB;
@@ -19,24 +20,24 @@ class FileSystemImpl extends FileSystemPOA
 {
 	private ORB orb;
 
+	// Put the directory which contains the file cache in here
+	File cacheDirectory = new File("fileCache");
+
+	// This file holds a list of all the other servers
+	private static String serverListFile = "servers.dat";
+
 	public void setORB(ORB orb_val)
 	{
 		orb = orb_val;
 	}
 
-	// implement sayHello() method
-	public String sayHello()
-	{
-		return "\nHello world !!\n";
-	}
-
 	// implement shutdown() method
+	@Override
 	public void shutdown()
 	{
 		orb.shutdown(false);
 	}
 
-	@Override
 	public String readFile(String title)
 	{
 		try
@@ -58,9 +59,55 @@ class FileSystemImpl extends FileSystemPOA
 	}
 
 	@Override
-	public String sayGoodbye() {
+	public boolean hasFile(String fileName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getFile(String fileName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int openFileReadonly(String fileName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String readRecord(int lineNumber, int filePointer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void closeFile(int filePointer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String[] listOpenFiles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String[] listLocalFiles()
+	{
+		File[] localFiles = cacheDirectory.listFiles();
+
+		ArrayList<String> returnList = new ArrayList<String>();
+
+		for(File f : localFiles)
+		{
+			if(f.isDirectory())
+				returnList.add(f.getName());
+		}
+
+		return (String[]) returnList.toArray();
 	}
 
 }
