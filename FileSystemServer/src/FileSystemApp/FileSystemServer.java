@@ -11,6 +11,10 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 
+
+/**
+ * Used by both Client & Server
+ */
 class FileSystemImpl extends FileSystemPOA
 {
 	private ORB orb;
