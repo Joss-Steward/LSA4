@@ -16,8 +16,10 @@ OK. So. CORBA. CORBA CORBA CORBA.
 Basically, we're going to need to add some methods to CORBA, which will then be turned into auto generated code, which is then used by both the client and the server.  It turns out that this isn't... *too* hard.
 
 Basically:
-1) Define your interface in FileSystem/FileSystem.idl
-2) `cd FileSystem && idlj -fserver -fclient FileSystem.idl`
+
+	1) Define your interface in FileSystem/FileSystem.idl
+
+	2) `cd FileSystem && idlj -fserver -fclient FileSystem.idl`
 
 Done. Now, you need to edit `FileSystemServer/FileSystemServer.java` to implement the new methods.
 
