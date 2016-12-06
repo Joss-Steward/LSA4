@@ -1,0 +1,10 @@
+module FileSystemApp
+{
+typedef sequence<octet> byteSeq;
+  interface FileSystem
+  {
+  string sayHello();
+  string readFile(in string title);
+  oneway void shutdown();
+  };
+};
