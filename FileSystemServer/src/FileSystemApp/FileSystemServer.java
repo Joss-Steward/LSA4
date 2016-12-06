@@ -57,6 +57,12 @@ class FileSystemImpl extends FileSystemPOA
 		return null;
 	}
 
+	@Override
+	public String sayGoodbye() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
 /**
