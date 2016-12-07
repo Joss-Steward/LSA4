@@ -136,13 +136,13 @@ public abstract class FileSystemPOA extends org.omg.PortableServer.Servant
     return (String[])__ids.clone ();
   }
 
-  public FileSystem _this() 
+  public FileSystem _this()
   {
     return FileSystemHelper.narrow(
     super._this_object());
   }
 
-  public FileSystem _this(org.omg.CORBA.ORB orb) 
+  public FileSystem _this(org.omg.CORBA.ORB orb)
   {
     return FileSystemHelper.narrow(
     super._this_object(orb));

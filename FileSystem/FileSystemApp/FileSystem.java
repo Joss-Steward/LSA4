@@ -8,6 +8,6 @@ package FileSystemApp;
 * Tuesday, December 6, 2016 6:39:22 PM EST
 */
 
-public interface FileSystem extends FileSystemOperations, org.omg.CORBA.Object, org.omg.CORBA.portable.IDLEntity 
+public interface FileSystem extends FileSystemOperations, org.omg.CORBA.Object, org.omg.CORBA.portable.IDLEntity
 {
 } // interface FileSystem

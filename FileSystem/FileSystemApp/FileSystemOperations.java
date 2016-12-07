@@ -8,7 +8,7 @@ package FileSystemApp;
 * Tuesday, December 6, 2016 6:39:22 PM EST
 */
 
-public interface FileSystemOperations 
+public interface FileSystemOperations
 {
 
   // Server-Server Functions //
