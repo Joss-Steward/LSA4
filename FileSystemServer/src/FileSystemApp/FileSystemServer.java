@@ -21,7 +21,6 @@ class FileSystemImpl extends FileSystemPOA
 	private ORB orb;
 
 	// Put the directory which contains the file cache in here
-	File cacheDirectory = new File("fileCache");
 
 	// This file holds a list of all the other servers
 	private static String serverListFile = "servers.dat";
@@ -97,6 +96,7 @@ class FileSystemImpl extends FileSystemPOA
 	@Override
 	public String[] listLocalFiles()
 	{
+		File cacheDirectory = new File("fileCache");
 		File[] localFiles = cacheDirectory.listFiles();
 
 		ArrayList<String> returnList = new ArrayList<String>();
