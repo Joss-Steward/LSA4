@@ -3,21 +3,29 @@ module FileSystemApp
   // Typedefs //
   typedef sequence<string> fileList;
   typedef sequence<octet> byteSeq;
-  
+
+  // There are cases where getFile will not be able to actually return the file (e.g. if it is open for a write), even though the server has the file //
+  struct FileCopy {
+    string fileContents;
+    boolean fileReturned;
+  };
+
   interface FileSystem
   {
     // Server-Server Functions //
     boolean hasFile(in string fileName);
-    string getFile(in string fileName);
+    FileCopy getFile(in string fileName);
+    boolean markDirty(in string fileName);
     
     // Client-Server Functions //
     long openFileReadonly(in string fileName);
-    string readRecord(in long lineNumber, in long filePointer);
+    long openFileReadWrite(in string fileName);
+    string readRecord(in long filePointer, in long recordNumber);
+    boolean writeRecord(in long filePointer, in long recordNumber, in string newValue);
     void closeFile(in long filePointer);
     
     // Testing Functions //
-    fileList listOpenFiles();
-    fileList listLocalFiles();
+    fileList listFiles(in boolean all);
     
     // System Functions //
     oneway void shutdown();
