@@ -335,8 +335,8 @@ class FileSystemImpl extends FileSystemPOA
 
 	@Override
 	public void closeFile(int filePointer) {
-		Utils.log("Closing handle " + filePointer);
-		String fileName = filePointers.get(filePointers);
+		String fileName = filePointers.get(filePointer);
+		Utils.log("Closing handle " + filePointer + " ('" + fileName + "')");
 
 		filePointers.remove(filePointer);
 
@@ -353,6 +353,8 @@ class FileSystemImpl extends FileSystemPOA
 			} else {
 				fileStatus.remove(fileName);
 			}
+		} else {
+			Utils.log("Not removing status, file still in use");
 		}
 	}
 
