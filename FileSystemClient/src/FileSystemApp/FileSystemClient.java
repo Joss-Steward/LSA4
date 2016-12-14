@@ -106,29 +106,43 @@ public class FileSystemClient
 		fileSystemImpl = FileSystemHelper.narrow(ncRef.resolve_str(name));
 	}
 
-	public static void list(boolean all) {
+	public static void list(boolean all)
+	{
 		String files[] = fileSystemImpl.listFiles(all);
-		for(int i = 0; i < files.length; i++) {
+
+		for(int i = 0; i < files.length; i++)
+		{
 			System.out.println(files[i]);
 		}
 	}
 
-	public static void open(String filename, boolean write) {
+	public static void open(String filename, boolean write)
+	{
 		int filePtr = -1;
-		if(!write) {
+
+		if(!write)
+		{
 			filePtr = fileSystemImpl.openFileReadonly(filename);
-		} else {
+		}
+		else
+		{
 			filePtr = fileSystemImpl.openFileReadWrite(filename);
 		}
 
-		if(filePtr == -1) {
+		if(filePtr == -1)
+		{
 			System.out.println("Attempt to open file failed!");
 			System.out.println("Is someone else using the file?");
 			System.out.println("Make sure the file exists on at least 1 server.");
-		} else {
-			if(write) {
+		}
+		else
+		{
+			if(write)
+			{
 				System.out.println("Successfully opened file '" + filename + "' in write mode");
-			} else {
+			}
+			else
+			{
 				System.out.println("Successfully opened file '" + filename + "' in read mode");
 			}
 
@@ -136,28 +150,35 @@ public class FileSystemClient
 		}
 	}
 
-	public static void close(int filePointer) {
+	public static void close(int filePointer)
+	{
 		fileSystemImpl.closeFile(filePointer);
 		System.out.println("Closed file '" + filePointer + "'");
 	}
 
-	public static void read(int filePointer, int recordNumber) {
+	public static void read(int filePointer, int recordNumber)
+	{
 		String record = fileSystemImpl.readRecord(filePointer, recordNumber);
 		System.out.printf("FILE %03d RECORD %04d: %s", filePointer, recordNumber, record);
 	}
 
-	public static void write(int filePointer, int recordNumber) {
+	public static void write(int filePointer, int recordNumber)
+	{
 		System.out.print("Enter new value: ");
 		String newValue = input.nextLine();
 
-		if(fileSystemImpl.writeRecord(filePointer, recordNumber, newValue)) {
+		if(fileSystemImpl.writeRecord(filePointer, recordNumber, newValue))
+		{
 			System.out.printf("UPDATED FILE %03d RECORD %04d: %s", filePointer, recordNumber, newValue);
-		} else {
+		}
+		else
+		{
 			System.out.printf("FAILED TO UPDATE FILE\n");
 		}
 	}
 
-	public static void showInvalidCmd() {
+	public static void showInvalidCmd()
+	{
 		System.out.println("The command you entered is not valid, please try again.");
 		System.out.println("Type 'help' to get a list of valid commands.");
 		System.out.println("Type 'help <command>' for imformation on how to use a command.");
@@ -168,105 +189,176 @@ public class FileSystemClient
 	 * @param input
 	 * @return
 	 */
-	public static boolean repl(String input) {
+	public static boolean repl(String input)
+	{
 		String[] tokens = input.toLowerCase().split(" ");
 
-		if(tokens.length == 0) return true;
-		if(tokens[0].equals("exit")) return false;
+		if(tokens.length == 0)
+			return true;
 
-		if(tokens[0].equals("help")) {
-			if(tokens.length == 1) {
+		if(tokens[0].equals("exit"))
+			return false;
+
+		if(tokens[0].equals("help"))
+		{
+			if(tokens.length == 1)
+			{
 				System.out.print(helpText);
-			} else if(tokens.length == 2) {
-				if(tokens[1].equals("open")) {
+			}
+			else if(tokens.length == 2)
+			{
+				if(tokens[1].equals("open"))
+				{
 					System.out.print(openHelpText);
-				} else if(tokens[1].equals("close")) {
+				}
+				else if(tokens[1].equals("close"))
+				{
 					System.out.print(closeHelpText);
-				} else if(tokens[1].equals("read")) {
+				}
+				else if(tokens[1].equals("read"))
+				{
 					System.out.print(readHelpText);
-				} else if(tokens[1].equals("write")) {
+				}
+				else if(tokens[1].equals("write"))
+				{
 					System.out.print(writeHelpText);
-				} else if(tokens[1].equals("list")) {
+				}
+				else if(tokens[1].equals("list"))
+				{
 					System.out.print(listHelpText);
-				} else if(tokens[1].equals("exit")) {
+				}
+				else if(tokens[1].equals("exit"))
+				{
 					System.out.print(exitHelpText);
-				} else {
+				}
+				else
+				{
 					System.out.println("Unknown command: '" + tokens[1] + "'");
 				}
-			} else {
+			}
+			else
+			{
 				showInvalidCmd();
 			}
 
 			return true;
-		} else if(tokens[0].equals("open")) {
-			if(tokens.length == 2) {
+		}
+		else if(tokens[0].equals("open"))
+		{
+			if(tokens.length == 2)
+			{
 				open(tokens[1], false);
-			} else if(tokens.length == 3) {
-				if(tokens[2].equals("read")) {
+			}
+			else if(tokens.length == 3)
+			{
+				if(tokens[2].equals("read"))
+				{
 					open(tokens[1], false);
-				} else if(tokens[2].equals("write")) {
+				}
+				else if(tokens[2].equals("write"))
+				{
 					open(tokens[1], true);
-				} else {
+				}
+				else
+				{
 					showInvalidCmd();
 				}
-			} else {
+			}
+			else
+			{
 				showInvalidCmd();
 			}
 
 			return true;
-		} else if(tokens[0].equals("close")) {
-			if(tokens.length == 2) {
-				try {
+		}
+		else if(tokens[0].equals("close"))
+		{
+			if(tokens.length == 2)
+			{
+				try
+				{
 					int fp = Integer.parseInt(tokens[1]);
 					close(fp);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					showInvalidCmd();
 				}
-			} else {
+			}
+			else
+			{
 				showInvalidCmd();
 			}
 
 			return true;
-		} else if(tokens[0].equals("read")) {
-			if(tokens.length == 3) {
-				try {
+		}
+		else if(tokens[0].equals("read"))
+		{
+			if(tokens.length == 3)
+			{
+				try
+				{
 					int fp = Integer.parseInt(tokens[1]);
 					int rec = Integer.parseInt(tokens[2]);
 					read(fp, rec);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					showInvalidCmd();
 				}
-			} else {
+			}
+			else
+			{
 				showInvalidCmd();
 			}
 
 			return true;
-		} else if(tokens[0].equals("write")) {
-			if(tokens.length == 3) {
-				try {
+		}
+		else if(tokens[0].equals("write"))
+		{
+			if(tokens.length == 3)
+			{
+				try
+				{
 					int fp = Integer.parseInt(tokens[1]);
 					int rec = Integer.parseInt(tokens[2]);
 					write(fp, rec);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					showInvalidCmd();
 				}
-			} else {
+			}
+			else
+			{
 				showInvalidCmd();
 			}
 
 			return true;
-		} else if(tokens[0].equals("list")) {
-			if(tokens.length == 1) {
+		}
+		else if(tokens[0].equals("list"))
+		{
+			if(tokens.length == 1)
+			{
 				list(true);
-			} else if(tokens.length == 2) {
-				if(tokens[1].equals("all")) {
+			}
+			else if(tokens.length == 2)
+			{
+				if(tokens[1].equals("all"))
+				{
 					list(true);
-				} else if(tokens[1].equals("open")) {
+				}
+				else if(tokens[1].equals("open"))
+				{
 					list(false);
-				} else {
+				}
+				else
+				{
 					showInvalidCmd();
 				}
-			} else {
+			}
+			else
+			{
 				showInvalidCmd();
 			}
 
@@ -287,9 +379,12 @@ public class FileSystemClient
 		System.out.printf("\nLSA PROJECT 4\n");
 		System.out.printf("BY: Joss Steward, Drew Rife, Alec Waddelow\n\n");
 
-		for(int i = 0; i < args.length; i++) {
-			if(args[i].equals("-ORBInitialHost")) {
-				if(args.length - 1 > i) {
+		for(int i = 0; i < args.length; i++)
+		{
+			if(args[i].equals("-ORBInitialHost"))
+			{
+				if(args.length - 1 > i)
+				{
 					hostname = args[i + 1];
 					break;
 				}
@@ -305,15 +400,21 @@ public class FileSystemClient
 
 			input = new Scanner(System.in);
 			boolean run = true;
-			while(run) {
-				if(fileSystemImpl != null) {
+
+			while(run)
+			{
+				if(fileSystemImpl != null)
+				{
 					System.out.print("CONNECTED (" + hostname + ") > ");
 				}
 
-				try {
+				try
+				{
 					if(!input.hasNext()) break;
 					run = repl(input.nextLine());
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					Utils.log("\n" + e.toString(), Priority.ERROR);
 				}
 
@@ -322,12 +423,6 @@ public class FileSystemClient
 
 			input.close();
 			System.out.println("\nGOODBYE");
-
-			//Utils.log("Obtained a handle on server object: " + fileSystemImpl, Priority.INFO);
-			//Utils.log("Test warn", Priority.WARNING);
-
-			//testFile("test1");
-			//testFile("notLocal");
 		}
 		catch (Exception e)
 		{
@@ -335,22 +430,3 @@ public class FileSystemClient
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
