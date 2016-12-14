@@ -7,15 +7,13 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import FileSystemApp.Utils.Priority;
 
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 import org.omg.CORBA.*;
 import org.omg.CORBA.ORBPackage.InvalidName;
 
 /**
- * A simple client that just gets a
+ * A simple client that connects to a server and provides the user with an interactive interface
  * @author Joss Steward, Merlin
- *
  */
 public class FileSystemClient
 {
