@@ -1,0 +1,29 @@
+# Our Distributed File System 
+## What it does & doesn't do
+
+By: Joss Steward, Drew Rife, Alec Waddelow
+
+## What works:
+
+Open a file for read access.
+Read a record from an open file.
+Close a file.
+List all of the files on the local machine.
+List all of the open files on the local machine.
+
+Clients can request read only access to any file held on any connected server, and it will be granted if the file isn't locked. If available, the file will be copied to the local server but not removed from any of the other servers.
+
+Open the file for write access.
+Read records from the file.
+Change records in the file.
+Close the file.
+
+When a file is opened for write, it is locked on all servers that have a copy. When a file is locked, no new clients can open it for read or write. Clients that currently have a copy open for reading mark their copy as dirty, and it is deleted once all local handles to it are closed. Once the modifier has closed the file, the changed version is the one which will be distributed to any new clients.
+
+Files cannot be opened for reading or writing if they are currently locked.
+
+## What doesn't work:
+
+This code won't handle any race conditions between clients.
+
+This code does not support read/latest. 
